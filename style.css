@@ -63,6 +63,7 @@ body::before{
 .btn.primary{background:linear-gradient(90deg,var(--yellow),var(--orange));color:#071029}
 .btn.secondary{background:transparent;border:2px solid rgba(0,0,0,0.10);color:#0f172a}
 .btn.ghost{background:transparent;border:1px dashed rgba(0,0,0,0.15);color:#0f172a}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
 
 .topics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
 .topic-card{padding:18px;border-radius:12px;background:rgba(255,255,255,0.7);cursor:pointer;text-align:center;border:1px solid rgba(0,0,0,0.06)}
