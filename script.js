@@ -263,6 +263,7 @@ function spinWheel(){
   state.spinning = true;
   state.landedIndex = null;
   byId("btnAnswer").disabled = true;
+  byId("btnSpin").disabled = true; // Desabilita o botão girar após o primeiro giro
 
   const n = PRIZES.length;
   const arc = (2*Math.PI)/n;
@@ -312,6 +313,7 @@ function resetRound(){
   state.landedIndex = null;
   state.lastTickIndex = null;
   byId("btnAnswer").disabled = true;
+  byId("btnSpin").disabled = false; // Reabilita o botão girar ao resetar
   state.angle = 0;
   drawWheel(0);
   highlightWin();
@@ -376,6 +378,10 @@ function showResult(correct, explain){
 
 function onConfirmAnswer(){
   if (selectedAnswerIndex==null || !currentQuestionObj) return;
+  
+  // Preservar o landedIndex antes de fechar o modal
+  const savedLandedIndex = state.landedIndex;
+  
   closeQuestionModal();
   const correct = selectedAnswerIndex === currentQuestionObj.a;
 
@@ -384,12 +390,15 @@ function onConfirmAnswer(){
     else sfxErrado().play();
   }catch(e){}
 
+  // Restaurar o landedIndex para mostrar o prêmio correto
+  state.landedIndex = savedLandedIndex;
   showResult(correct, currentQuestionObj.explain);
 }
 
 function closeResult(){
   byId("modalResult").setAttribute("aria-hidden","true");
   resetRound();
+  byId("btnSpin").disabled = false; // Reabilita o botão girar após responder pergunta
 }
 
 function buildTopics(){
