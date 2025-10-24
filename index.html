@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Semana da Qualidade — Roleta</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Logo fixa no canto superior direito (todas as telas) -->
+  <img src="logo.png" alt="Logo" class="brand-logo" />
+
+  <div class="app">
+    <header class="topbar">
+      <style>
+        /* Esconde o título apenas quando a tela da roleta estiver ativa */
+        .topbar:has(+ main .screen#screen-wheel.active) .brand-text {
+          display: none;
+        }
+      </style>
+
+      <h1 class="brand-text">SEMANA DA QUALIDADE CNH</h1>
+      <p class="subtitle brand-text">Gire a roleta, responda e concorra a brindes ✨</p>
+    </header>
+
+    <main class="card">
+      <!-- TELA: INÍCIO -->
+      <section id="screen-start" class="screen active" aria-label="Tela inicial">
+        <div class="start-inner">
+          <h2>Pronto pra jogar?</h2>
+          <p>Escolha um tema, gire a roleta e mostre que você manda bem em Qualidade!</p>
+          <div class="actions">
+            <button id="btnJogar" class="btn primary">Jogar</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TELA: TEMAS -->
+      <section id="screen-topics" class="screen" aria-label="Seleção de temas">
+        <h2>Escolha o tema</h2>
+        <div id="topicsList" class="topics-grid"></div>
+        <div class="nav-row">
+          <button id="btnBackToStart" class="btn ghost">Voltar</button>
+        </div>
+      </section>
+
+      <!-- TELA: ROLETA -->
+      <section id="screen-wheel" class="screen" aria-label="Roleta">
+        <div class="wheel-header">
+          <h2 id="wheelTitle" class="wheel-title">Gire para saber o prêmio!</h2>
+          <div class="round-info">Tema: <strong id="currentTopic">—</strong></div>
+        </div>
+
+        <div class="wheel-area">
+          <div class="pointer" id="pointer" aria-hidden="true"></div>
+          <canvas id="wheelCanvas" width="520" height="520"></canvas>
+        </div>
+
+        <div class="controls">
+          <button id="btnSpin" class="btn primary">Girar</button>
+          <button id="btnAnswer" class="btn secondary" disabled>Responder</button>
+          <button id="btnReset" class="btn ghost">Resetar</button>
+        </div>
+
+        <div class="prizes-list">
+          <p class="muted">Prêmios da rodada:</p>
+          <ul id="prizeList"></ul>
+        </div>
+        
+        <!-- Botão discreto para voltar à tela inicial -->
+        <button id="btnBackToHome" class="btn-home" title="Voltar ao início">Voltar ao início</button>
+      </section>
+    </main>
+
+    <footer class="footer">Semana da Qualidade • Pense diferente</footer>
+  </div>
+
+  <!-- ÁUDIOS -->
+  <audio id="sfxRoleta" src="roleta.mp3" preload="auto" loop></audio>
+  <audio id="sfxCerto"  src="certo.mp3"  preload="auto"></audio>
+  <audio id="sfxErrado" src="errado.mp3" preload="auto"></audio>
+
+  <!-- MODAL: PERGUNTA -->
+  <div id="modalQuestion" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Responder</h3>
+        <p id="modalTopic" class="muted">Tema: —</p>
+      </div>
+      <div class="modal-body">
+        <p id="modalQuestionText">—</p>
+        <div id="choicesContainer" class="choices"></div>
+      </div>
+      <div class="modal-actions">
+        <button id="btnCancelModal" class="btn ghost">Cancelar</button>
+        <button id="btnSubmitAnswer" class="btn primary" disabled>Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: RESULTADO -->
+  <div id="modalResult" class="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div id="resultBox" class="result">
+        <!-- preenchido via JS -->
+      </div>
+      <div class="modal-actions">
+        <button id="btnBackToWheel" class="btn primary">Ok</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
